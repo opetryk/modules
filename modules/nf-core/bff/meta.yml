@@ -1,0 +1,77 @@
+name: "BFF"
+description: BFF is an extension to Bimodal Flexible Fitting (BFF) demultiplexing algorithms designed to demultiplex cell hashing data.
+keywords:
+  - bff
+  - demultiplexing
+tools:
+  - "bff":
+      description: "BFF designed to demultiplex cell hashing data"
+      homepage: "https://github.com/BimberLab/cellhashR/"
+      documentation: "https://github.com/BimberLab/cellhashR/"
+      tool_dev_url: "https://github.com/BimberLab/cellhashR/"
+      licence: "['Free software license (https://github.com/BimberLab/cellhashR/blob/master/README.md)']"
+input:
+  - meta:
+      type: map
+      description: |
+        Groovy Map containing sample information
+        e.g. [ id:'test', single_end:false ]
+  - fileHto:
+      type: path
+      description: Path to file HTO count matrix
+  - methods:
+      type: string
+      description: Comma separated values of one or more calling methods to use
+  - methodsForConsensus:
+      type: string
+      description: Comma separated values. By default, a consensus call will be generated using all methods
+  - cellbarcodeWhitelist:
+      type: string
+      description: Comma separated values of expected cell barcodes. This allows reporting on the total set of expected barcodes, not just those in the filtered count matrix
+  - metricsFile:
+      type: file
+      description: If provided, summary metrics will be written to this file.
+  - doTSNE:
+      type: boolean
+      description: If true, tSNE will be run on the resulting hashing calls after each caller.
+  - preprocess_bff:
+      type: boolean
+      description: If 'true', the PreProcess function by CellHashR is executed
+  - barcodeWhitelist:
+      type: string
+      description: Comma separated values of barcode names to retain, used for preprocessing step
+  - doHeatmap:
+      type: boolean
+      description: if true, Seurat::HTOHeatmap will be run on the results of each caller
+  - perCellSaturation:
+      type: file
+      description: An optional dataframe with the columns cellbarcode and saturation
+  - majorityConsensusThreshold:
+      type: 
+      description: This applies to calculating a consensus call when multiple algorithms are used
+  - chemistry: 
+      type: string
+      description: This string is passed to EstimateMultipletRate. Should be either 10xV2 or 10xV3.
+  - callerDisagreementThreshold:
+      type: 
+      description: If provided, the agreement rate will be calculated between each caller and the simple majority call, ignoring discordant and no-call cells
+  - assignmentOutBff:
+      type: string
+      description: Prefix name for the file containing the output of BFF assignment
+  - outputdir:
+      type: string
+      description: Output directory
+output:
+  - meta:
+      type: map
+      description: |
+        Groovy Map containing sample information
+        e.g. [ id:'test', single_end:false ]
+  - output:
+      type: directory
+      description: Directory contains output csv files with demultiplexed cell hasj data
+      pattern: bff_<sample_id>/
+authors:
+  - "https://github.com/BimberLab"
+maintainers:
+  - "https://github.com/BimberLab"
